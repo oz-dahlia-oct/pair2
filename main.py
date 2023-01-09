@@ -3,6 +3,7 @@ import random
 import sys
 from datetime import datetime
 import logging
+import argparse
 
 
 from selenium import webdriver
@@ -85,13 +86,14 @@ def execute(
 
 if __name__ == '__main__':
 
-    # 引数の確認
-    last_login = sys.argv[1]
-    iteration = int(sys.argv[2])
-    sep_tall = sys.argv[3]
-    print('last_login:', last_login)
-    print('iteration:', iteration)
-    print('sep_tall:', sep_tall, '\n')
+    # コマンドライン・オプション引数の設定
+    parser = argparse.ArgumentParser(description='実行時の設定を追加')
+    parser.add_argument('-last-login', type=int, default=1)
+    parser.add_argument('-iteration', type=int, default=10)
+    parser.add_argument('-tall-sep', type=int, default=0)
+    parser.add_argument('-age-start', type=int, default=34)
+    parser.add_argument('-age-end', type=int, default=60)
+    args = parser.parse_args()
 
     # 準備
     d = webdriver.Chrome('./driver/chromedriver')
@@ -99,7 +101,7 @@ if __name__ == '__main__':
     d.get('https://pairs.lv/search')
     a = input()
 
-    if sep_tall=='sep':
+    if args.tall_sep==1:
         tall_list = [
             [1, 155],
             [155, 160],
@@ -110,10 +112,10 @@ if __name__ == '__main__':
         tall_list = [[1, 999]]
 
     # 反復実行
-    for _ in range(iteration):
+    for _ in range(args.iteration):
         execute(
-            d, age_list=list(range(34, 60)),
-            last_login=last_login, 
+            d, age_list=list(range(args.age_start, args.age_end)),
+            last_login=args.last_login, 
             tall_list=tall_list,
             random_sort=True
         )
