@@ -112,6 +112,7 @@ if __name__ == '__main__':
         tall_list = [[1, 999]]
 
     # 反復実行
+    logger.debug(f'Last Login: {args.last_login}, Iteration: {args.iteration}, Age(start): {args.age_start}, Age(end): {args.age_end}')
     for _ in range(args.iteration):
         execute(
             d, age_list=list(range(args.age_start, args.age_end)),
