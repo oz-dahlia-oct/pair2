@@ -19,7 +19,7 @@ import pandas as pd
 
 
 
-def search(d, age, prefs, login='1', tall=[1, 999]):
+def search(d, age, prefs, login='1', tall=[1, 999], edu_background=1):
     
     # 検索条件全てリセット
     d.find_element(By.CLASS_NAME, 'css-5402qv').click()
@@ -40,6 +40,15 @@ def search(d, age, prefs, login='1', tall=[1, 999]):
     # 8 | click | css=*[data-test="header-submit-button"] | 
     # 決定
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
+
+    # 学歴変更開始
+    time.sleep(1)
+    d.execute_script('window.scrollBy(0, -1000);')
+    d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(4) > .css-a3zx38").click()
+    d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu_background}) .list-item-label__nmShn").click()
+    time.sleep(1)
+    d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
+    time.sleep(1)
 
     # 9 | select | css=li:nth-child(2) .css-dbt3au:nth-child(1) .css-1bq0nkw | label=29歳
     # 年齢開始選択
@@ -99,7 +108,7 @@ def search(d, age, prefs, login='1', tall=[1, 999]):
 
 
 
-def click_users(d, age, prefs, wait_time=1.5, scroll_count=50):
+def click_users(d, wait_time=1.5, scroll_count=50):
 
     for i in range(scroll_count):
         d.execute_script('window.scrollBy(0, 1000);')
@@ -137,7 +146,7 @@ def click_users(d, age, prefs, wait_time=1.5, scroll_count=50):
 
 
 
-def exe_pattern(d, age, prefs, last_login, tall=[1, 999], wait_time=1.7):
+def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait_time=1.7):
     d.get('https://pairs.lv/search')
     result = {'age': age, 'pref': prefs}
 
@@ -147,7 +156,7 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], wait_time=1.7):
     time.sleep(2)
 
     # 検索条件を設定して検索実行
-    search(d, age=age, prefs=prefs, login=f'{last_login}', tall=tall)
+    search(d, age=age, prefs=prefs, login=f'{last_login}', tall=tall, edu_background=edu_background)
     
     # 検索結果なしの場合をチェック
     judge_list = d.page_source.split('お相手が見つかりませんでした')
@@ -168,8 +177,7 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], wait_time=1.7):
 
     # ユーザーに足跡をつける
     click_count = click_users(
-        d, age=age, prefs=prefs, 
-        wait_time=wait_time, scroll_count=scroll_count
+        d, wait_time=wait_time, scroll_count=scroll_count
     )
 
     result['clickcount'] = click_count

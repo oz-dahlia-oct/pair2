@@ -51,7 +51,8 @@ def execute(
         [31, 32, 33, 33, 34, 35, 36, 37, 38, 39], # 中四国
         [40, 41, 42, 43, 44, 45, 46, 47], # 九州・沖縄
     ],
-    tall_list = [[1, 999]],
+    tall_list=[[1, 999]],
+    edu_background=[1],
     random_sort=True,
 ):
     """
@@ -67,18 +68,21 @@ def execute(
     for age in age_list:
         for prefs in prefs_list:
             for tall in tall_list:  
-                try:
-                    # 実行開始ア合図
-                    logger.debug(f'年齢: {age}, 都道府県: {prefs}, 身長: {tall}, 最終ログイン: {last_login}')
-                    success, result, search_result, click_count = exe_pattern(d, age, prefs, last_login, tall, wait_time=2.0)
-                    logger.debug(f'検索結果: {search_result}, 足跡付けた数: {click_count}')
-                    if success:
-                        results.append(result)
-                    
-                except Exception as e:
-                    print(e)
-                    time.sleep(120)
-                    continue
+                for eb in edu_background:
+                    try:
+                        # 実行開始ア合図
+                        logger.debug(f'年齢: {age}, 都道府県: {prefs}, 身長: {tall}, 最終ログイン: {last_login}, 学歴: {eb}')
+                        success, result, search_result, click_count = exe_pattern(
+                            d, age, prefs, last_login, tall, edu_background=eb, wait_time=2.0
+                        )
+                        logger.debug(f'検索結果: {search_result}, 足跡付けた数: {click_count}')
+                        if success:
+                            results.append(result)
+                        
+                    except Exception as e:
+                        print(e)
+                        time.sleep(120)
+                        continue
 
 
 
@@ -93,6 +97,7 @@ if __name__ == '__main__':
     parser.add_argument('-tall-sep', type=int, default=0)
     parser.add_argument('-age-start', type=int, default=34)
     parser.add_argument('-age-end', type=int, default=60)
+    parser.add_argument('-edu-sep', type=int, default=0)
     args = parser.parse_args()
 
     # 準備
@@ -111,13 +116,18 @@ if __name__ == '__main__':
     else:
         tall_list = [[1, 999]]
 
+    if args.edu_sep==0:
+        edu_backgound = [1]
+    else:
+        edu_backgound = [2, 3, 4, 5, 6]
+
     # 反復実行
     logger.debug(f'Last Login: {args.last_login}, Iteration: {args.iteration}, Age(start): {args.age_start}, Age(end): {args.age_end}')
     for _ in range(args.iteration):
         execute(
             d, age_list=list(range(args.age_start, args.age_end)),
             last_login=args.last_login, 
-            tall_list=tall_list,
+            tall_list=tall_list, edu_background=edu_backgound,
             random_sort=True
         )
 
