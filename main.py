@@ -101,26 +101,26 @@ if __name__ == '__main__':
     parser.add_argument('-ittosanken', type=int, default=0)
     args = parser.parse_args()
 
-    # 準備
-    d = webdriver.Chrome('./driver/chromedriver')
-    d.implicitly_wait(10)
-    d.get('https://pairs.lv/search')
-    a = input()
+    print('\n\n\n')
 
-    if args.tall_sep==1:
+    if args.tall_sep == 1:
         tall_list = [
             [1, 155],
             [155, 160],
             [160, 165],
             [165, 999]
         ]
-    else:
+        print('tall_sep:', 1)
+    elif args.tall_sep == 0:
         tall_list = [[1, 999]]
+        print('tall_sep:', 0)
 
-    if args.edu_sep==0:
+    if args.edu_sep == 0:
         edu_backgound = [1]
-    else:
+        print('edu_sep:', 0)
+    elif args.edu_sep == 1:
         edu_backgound = [2, 3, 4, 5, 6]
+        print('edu_sep:', 1)
 
 
     if args.ittosanken == 0:
@@ -136,16 +136,28 @@ if __name__ == '__main__':
             [31, 32, 33, 33, 34, 35, 36, 37, 38, 39], # 中四国
             [40, 41, 42, 43, 44, 45, 46, 47], # 九州・沖縄
         ]
+        print('ittosanken:', 0)
     elif args.ittosanken == 1:
         prefs_list = [
             [11, 12, 14], # 千葉・埼玉・神奈川
             [13], # 東京
         ]
+        print('ittosanken:', 1)
     else:
         raise Exception('arg "-ittosanken" should be 0 or 1.')
 
+    print('\n\n\n')
+
+    # 準備
+    d = webdriver.Chrome('./driver/chromedriver')
+    d.implicitly_wait(10)
+    d.get('https://pairs.lv/search')
+    a = input()
+
     # 反復実行
+    print('\n\n\n')
     logger.debug(f'Last Login: {args.last_login}, Iteration: {args.iteration}, Age(start): {args.age_start}, Age(end): {args.age_end}')
+    print('\n\n\n')
     for _ in range(args.iteration):
         execute(
             d, age_list=list(range(args.age_start, args.age_end)),
