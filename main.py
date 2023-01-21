@@ -98,6 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('-age-start', type=int, default=34)
     parser.add_argument('-age-end', type=int, default=60)
     parser.add_argument('-edu-sep', type=int, default=0)
+    parser.add_argument('-ittosanken', type=int, default=0)
     args = parser.parse_args()
 
     # 準備
@@ -121,11 +122,34 @@ if __name__ == '__main__':
     else:
         edu_backgound = [2, 3, 4, 5, 6]
 
+
+    if args.ittosanken == 0:
+        prefs_list = [
+            [1, 2, 3, 4, 5, 6], # 北海道・東北
+            [7, 8, 9, 10, 15, 16, 17, 18], # 北関東, 北陸
+            [11, 12, 14], # 千葉・埼玉・神奈川
+            [13], # 東京
+            [19, 20, 21, 22, 24], # 中部(愛知除く)
+            [23], # 愛知
+            [25, 26, 28, 29, 30], # 関西(大阪除く)
+            [27], # 大阪
+            [31, 32, 33, 33, 34, 35, 36, 37, 38, 39], # 中四国
+            [40, 41, 42, 43, 44, 45, 46, 47], # 九州・沖縄
+        ]
+    elif args.ittosanken == 1:
+        prefs_list = [
+            [11, 12, 14], # 千葉・埼玉・神奈川
+            [13], # 東京
+        ]
+    else:
+        raise Exception('arg "-ittosanken" should be 0 or 1.')
+
     # 反復実行
     logger.debug(f'Last Login: {args.last_login}, Iteration: {args.iteration}, Age(start): {args.age_start}, Age(end): {args.age_end}')
     for _ in range(args.iteration):
         execute(
             d, age_list=list(range(args.age_start, args.age_end)),
+            prefs_list=prefs_list,
             last_login=args.last_login, 
             tall_list=tall_list, edu_background=edu_backgound,
             random_sort=True
