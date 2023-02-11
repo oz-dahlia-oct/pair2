@@ -116,29 +116,37 @@ def click_users(d, wait_time=1.5, scroll_count=50):
 
     first_user = d.find_element(By.CLASS_NAME, 'css-opde7s')
     first_user.click()
-    time.sleep(1)
-
-    counter = 1
+    
+    counter = 0
     user_ids = set()
 
     while True:
-        d.find_element(By.CSS_SELECTOR, ".css-1d94zew > svg")
-        next_user = d.find_elements(By.CSS_SELECTOR, ".css-1d94zew > svg")[-1]
-        next_user_type = next_user.find_element(By.TAG_NAME, 'title')
-        if next_user_type.text == '次のお相手を見る':
-            next_user.click()
-            time.sleep(wait_time)
-            url = d.current_url
-            user_id = url.split('/')[-1]
-            if user_id == 'search':
-                break
-            # print(f'年齢: {age}, 都道府県: {prefs}, USER_ID: {user_id}')
-            if user_id not in user_ids:
-                user_ids.add(user_id)
-                counter += 1
+        # user の確認
+        time.sleep(1) # 読み込み待機
+        url = d.current_url
+        user_id = url.split('/')[-1]
+        if user_id == 'search':
+            break
+        if user_id not in user_ids:
+            user_ids.add(user_id)
+            counter += 1
+
+        # 次のユーザーに進む
+        user_arrows = d.find_elements(By.CSS_SELECTOR, ".css-1d94zew > svg")
+        if len(user_arrows) >= 1:
+            next_user = user_arrows[-1]
+            next_user_type = next_user.find_element(By.TAG_NAME, 'title')
+            if next_user_type.text == '次のお相手を見る':
+                next_user.click()
+                time.sleep(wait_time)
+                
+                else:
+                    break
             else:
+                # 最後のユーザーなので終了する
                 break
         else:
+            # 矢印が表示されないので終了する（検索結果は一人）
             break
 
     print(counter)
@@ -167,14 +175,14 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait
     # 検索結果を取得・表示
     search_result = d.find_element(By.CLASS_NAME, 'css-1x24mcp') 
 
-    if search_result.text == '10人未満':
-        return False, {}, search_result.text, 0
+    # if search_result.text == '10人未満':
+    #     return False, {}, search_result.text, 0
     
     search_result.click()
 
     result['search_result'] = search_result.text
     search_result_number  = int(search_result.text.split('人')[0].replace(',', ''))
-    scroll_count = search_result_number // 4
+    scroll_count = search_result_number // 4 + 1
 
     # ユーザーに足跡をつける
     click_count = click_users(
