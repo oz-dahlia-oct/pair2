@@ -81,11 +81,8 @@ def execute(
                         
                     except Exception as e:
                         print(e)
-                        # time.sleep(120)
-                        with open('./log/source.html', 'w') as f:
-                            f.write(d.page_source)
-                        d.quit()
-                        raise Exception()
+                        time.sleep(120)
+                        continue
                         
 
 
