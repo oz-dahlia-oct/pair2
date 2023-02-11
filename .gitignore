@@ -44,11 +44,10 @@ pip-delete-this-directory.txt
 /driver/*
 
 # log files
-/logs/*.log
-.DS_Store
-/logs/*.html
-/logs/*.txt
 /log/*.log
+.DS_Store
+/log/*.html
+/log/*.txt
 
 # tast case memo
 test_cases/
