@@ -157,6 +157,7 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait
 
     # 検索条件を設定して検索実行
     search(d, age=age, prefs=prefs, login=f'{last_login}', tall=tall, edu_background=edu_background)
+    time.sleep(2)
     
     # 検索結果なしの場合をチェック
     judge_list = d.page_source.split('お相手が見つかりませんでした')
@@ -169,8 +170,12 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait
 
     if search_result.text == '10人未満':
         return False, {}, search_result.text, 0
-        
-    search_result.click()
+    
+    try:
+        search_result.click()
+    except Exception as e:
+        print('judge_list len:', len(judge_list))
+
     result['search_result'] = search_result.text
     search_result_number  = int(search_result.text.split('人')[0].replace(',', ''))
     scroll_count = search_result_number // 4
