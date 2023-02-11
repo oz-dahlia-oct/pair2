@@ -122,7 +122,7 @@ def click_users(d, wait_time=1.5, scroll_count=50):
 
     while True:
         # user の確認
-        time.sleep(1) # 読み込み待機
+        time.sleep(wait_time) # 読み込み待機
         url = d.current_url
         user_id = url.split('/')[-1]
         if user_id == 'search':
@@ -138,10 +138,6 @@ def click_users(d, wait_time=1.5, scroll_count=50):
             next_user_type = next_user.find_element(By.TAG_NAME, 'title')
             if next_user_type.text == '次のお相手を見る':
                 next_user.click()
-                time.sleep(wait_time)
-                
-                else:
-                    break
             else:
                 # 最後のユーザーなので終了する
                 break
