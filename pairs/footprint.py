@@ -43,7 +43,7 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=1):
 
     # 学歴変更開始
     time.sleep(1)
-    d.execute_script('window.scrollBy(0, -1000);')
+    d.execute_script('window.scrollBy(0, -2000);')
     d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(4) > .css-a3zx38").click()
     d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu_background}) .list-item-label__nmShn").click()
     time.sleep(1)
