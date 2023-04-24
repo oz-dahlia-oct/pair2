@@ -168,16 +168,16 @@ def check_user(d, user_id):
     like_elm = user_elm.find('span', class_='css-1d0vcp5')
     like = like_elm.text.replace('いいね！', '')
     detail['いいね'] = like
-    basic_elm = user_elm.find('span', class_='css-1h52dri')
-    basic = basic_elm.text
-    age = basic.split('歳 ')[0]
-    pref = basic.split('歳 ')[1]
-    detail['age'] = age
-    detail['pref'] = pref
+    # basic_elm = user_elm.find('span', class_='css-1h52dri')
+    # basic = basic_elm.text
+    # age = basic.split('歳 ')[0]
+    # pref = basic.split('歳 ')[1]
+    # detail['age'] = age
+    # detail['pref'] = pref
 
     side_panel = soup.find('div', class_='css-rxcc9b')
     dl_elms = side_panel.find_all('dl', class_='css-1woihig')
-    print('dl len:', len(dl_elms))
+    # print('dl len:', len(dl_elms))
     
     i = 1
     for dl_elm in dl_elms:
@@ -190,7 +190,7 @@ def check_user(d, user_id):
 
     time_now = datetime.now()
     detail['datetime'] = datetime.strftime(time_now, '%Y-%m-%d %H:%M:%S')
-    pprint(detail)
+    # pprint(detail)
     with open(f'./candidates/{user_id}.json', 'w', encoding='utf-8') as f:
         json.dump(detail, f, indent=4, sort_keys=True, ensure_ascii=False)
 
