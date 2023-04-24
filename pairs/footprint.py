@@ -189,7 +189,7 @@ def check_user(d, user_id):
             i += 1
 
     time_now = datetime.now()
-    detail['datetime'] = datetime.strptime(time_now, '%Y-%m-%d %H:%M:%S')
+    detail['datetime'] = datetime.strftime(time_now, '%Y-%m-%d %H:%M:%S')
     pprint(detail)
     with open(f'./candidates/{user_id}.json', 'w', encoding='utf-8') as f:
         json.dump(detail, f, indent=4, sort_keys=True, ensure_ascii=False)
