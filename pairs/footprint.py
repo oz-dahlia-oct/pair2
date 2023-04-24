@@ -180,6 +180,7 @@ def check_user(d, user_id):
                 k = child.text
             else:
                 detail[k] = child.text
+            i += 1
 
     pprint(detail)
 
