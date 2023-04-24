@@ -43,6 +43,9 @@ pip-delete-this-directory.txt
 /drivers/chromedriver*
 /driver/*
 
+# candidates results
+/candidates/*.json
+
 # log files
 /log/*.log
 .DS_Store

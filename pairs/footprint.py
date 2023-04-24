@@ -1,5 +1,6 @@
 import time
 import random
+import os
 
 
 from selenium import webdriver
@@ -8,6 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions as EC
+
+from bs4 import BeautifulSoup
 
 import pandas as pd
 
@@ -130,6 +133,7 @@ def click_users(d, wait_time=1.5, scroll_count=50):
         if user_id not in user_ids:
             user_ids.add(user_id)
             counter += 1
+            check_user(d, user_id)
 
         # 次のユーザーに進む
         user_arrows = d.find_elements(By.CSS_SELECTOR, ".css-1d94zew > svg")
@@ -148,6 +152,14 @@ def click_users(d, wait_time=1.5, scroll_count=50):
     print(counter)
     return counter
 
+
+def check_user(d, user_id):
+    if os.path.isfile(f'./candidates/{user_id}.json'): return
+    soup = BeautifulSoup(d.page_source, 'html.parser')
+    user_elm = soup.find('div', class_='css-uyj4df')
+    like_elm = user_elm.find('span', class_='css-1d0vcp5')
+    like = like_elm.text.replace('いいね！', '')
+    print(user_id, 'like:', like)
 
 
 def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait_time=1.7):
