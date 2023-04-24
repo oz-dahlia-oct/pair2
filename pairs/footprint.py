@@ -120,6 +120,7 @@ def click_users(d, wait_time=1.5, scroll_count=50):
 
     first_user = d.find_element(By.CLASS_NAME, 'css-opde7s')
     first_user.click()
+    time.sleep(3) # 1人目だけ追加で待機
     
     counter = 0
     user_ids = set()
@@ -134,7 +135,10 @@ def click_users(d, wait_time=1.5, scroll_count=50):
         if user_id not in user_ids:
             user_ids.add(user_id)
             counter += 1
-            check_user(d, user_id)
+            try:
+                check_user(d, user_id)
+            except Exception as e:
+                print(e)
 
         # 次のユーザーに進む
         user_arrows = d.find_elements(By.CSS_SELECTOR, ".css-1d94zew > svg")
