@@ -168,7 +168,10 @@ def check_user(d, user_id):
     pref = basic.split('歳 ')[1]
     detail['age'] = age
     detail['pref'] = pref
-    dl_elms = user_elm.find_all('dl', class_='css-1woihig')
+
+    side_panel = soup.find('div', class_='css-rxcc9b')
+    dl_elms = side_panel.find_all('dl', class_='css-1woihig')
+    print('dl len:', len(dl_elms))
     
     i = 1
     for dl_elm in dl_elms:
