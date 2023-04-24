@@ -1,6 +1,7 @@
 import time
 import random
 import os
+from pprint import pprint
 
 
 from selenium import webdriver
@@ -155,11 +156,30 @@ def click_users(d, wait_time=1.5, scroll_count=50):
 
 def check_user(d, user_id):
     if os.path.isfile(f'./candidates/{user_id}.json'): return
+    detail = {'user_id': user_id}
     soup = BeautifulSoup(d.page_source, 'html.parser')
     user_elm = soup.find('div', class_='css-uyj4df')
     like_elm = user_elm.find('span', class_='css-1d0vcp5')
     like = like_elm.text.replace('いいね！', '')
-    print(user_id, 'like:', like)
+    detail['いいね'] = like
+    basic_elm = user_elm.find('span', class_='css-1h52dri')
+    basic = basic_elm.text
+    age = basic.split('歳 ')[0]
+    pref = basic.split('歳 ')[1]
+    detail['age'] = age
+    detail['pref'] = pref
+    dl_elms = user_elm.find_all('dl', class_='css-1woihig')
+    
+    i = 1
+    for dl_elm in dl_elms:
+        for child in dl_elm.contents:
+            if i % 2 == 1:
+                k = child.text
+            else:
+                detail[k] = child.text
+
+    pprint(detail)
+
 
 
 def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait_time=1.7):
