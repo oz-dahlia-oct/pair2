@@ -2,6 +2,8 @@ import time
 import random
 import os
 from pprint import pprint
+import json
+from datetime import datetime
 
 
 from selenium import webdriver
@@ -186,7 +188,10 @@ def check_user(d, user_id):
                 detail[k] = child.text
             i += 1
 
+    detail['datetime'] = datetime.now().strptime('%Y-%m-%d %H:%M:%S')
     pprint(detail)
+    with open(f'./candidates/{user_id}.json', 'w', encoding='utf-8') as f:
+        json.dump(detail, f, indent=4, sort_keys=True, ensure_ascii=False)
 
 
 
