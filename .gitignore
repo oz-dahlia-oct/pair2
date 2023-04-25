@@ -46,6 +46,9 @@ pip-delete-this-directory.txt
 # candidates results
 /candidates/*.json
 
+# myutil
+myutil.py
+
 # log files
 /log/*.log
 .DS_Store
