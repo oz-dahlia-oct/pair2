@@ -160,24 +160,30 @@ def click_users(d, wait_time=1.5, scroll_count=50):
     return counter
 
 
+
 def check_user(d, user_id):
-    if os.path.isfile(f'./candidates/{user_id}.json'): return
+
+    json_file_name = f'./candidates/{user_id}.json'
     detail = {'user_id': user_id}
+    time_now = datetime.now()
+    time_now_str = datetime.strftime(time_now, '%Y-%m-%d %H:%M:%S')
+    detail['update_at'] = time_now_str
+
+    if os.path.isfile(json_file_name):
+        with open(json_file_name, 'r') as f:
+            d = json.load(f)
+            detail['datetime'] = d['datetime']
+    else:
+        detail['datetime'] = time_now_str
+
     soup = BeautifulSoup(d.page_source, 'html.parser')
     user_elm = soup.find('div', class_='css-uyj4df')
     like_elm = user_elm.find('span', class_='css-1d0vcp5')
     like = like_elm.text.replace('いいね！', '')
     detail['いいね'] = like
-    # basic_elm = user_elm.find('span', class_='css-1h52dri')
-    # basic = basic_elm.text
-    # age = basic.split('歳 ')[0]
-    # pref = basic.split('歳 ')[1]
-    # detail['age'] = age
-    # detail['pref'] = pref
 
     side_panel = soup.find('div', class_='css-rxcc9b')
     dl_elms = side_panel.find_all('dl', class_='css-1woihig')
-    # print('dl len:', len(dl_elms))
     
     i = 1
     for dl_elm in dl_elms:
@@ -188,10 +194,7 @@ def check_user(d, user_id):
                 detail[k] = child.text
             i += 1
 
-    time_now = datetime.now()
-    detail['datetime'] = datetime.strftime(time_now, '%Y-%m-%d %H:%M:%S')
-    # pprint(detail)
-    with open(f'./candidates/{user_id}.json', 'w', encoding='utf-8') as f:
+    with open(json_file_name, 'w', encoding='utf-8') as f:
         json.dump(detail, f, indent=4, sort_keys=True, ensure_ascii=False)
 
 
