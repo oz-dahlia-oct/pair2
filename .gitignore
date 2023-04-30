@@ -49,6 +49,9 @@ pip-delete-this-directory.txt
 # myutil
 myutil.py
 
+# html
+*.html
+
 # log files
 /log/*.log
 .DS_Store
