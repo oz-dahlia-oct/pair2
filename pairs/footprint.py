@@ -181,7 +181,8 @@ def check_user(d, user_id):
     like_elm = user_elm.find('span', class_='css-1d0vcp5')
     like = like_elm.text.replace('いいね！', '')
     detail['いいね'] = like
-    top_icon_elm = soup.find('img', class_='css-onf91i')
+    top_icon_div = soup.find('div', class_='css-3c0z1e')
+    top_icon_elm = top_icon_div.find('img', class_='css-onf91i')
     detail['top_icon'] = top_icon_elm['src']
 
     side_panel = soup.find('div', class_='css-rxcc9b')
