@@ -190,20 +190,20 @@ def check_user(d, user_id):
     top_icon_elm = top_icon_div.find('img', class_='css-onf91i')
     detail['top_icon'] = top_icon_elm['src']
 
-    icon_list = []
-    while True:
-        right_arrow = soup.find('button', class_='css-1oqslv6')
-        if right_arrow is None:
-            break
-        else:
-            d.find_element(By.CLASS_NAME, 'css-1oqslv6').click()
-            time.sleep(0.5)
-            soup = BeautifulSoup(d.page_source, 'html.parser')
-            top_icon_div = soup.find('div', class_='css-3c0z1e')
-            top_icon_elm = top_icon_div.find('img', class_='css-onf91i')
-            icon_list.append(top_icon_elm['src'])
+    # icon_list = []
+    # while True:
+    #     right_arrow = soup.find('button', class_='css-1oqslv6')
+    #     if right_arrow is None:
+    #         break
+    #     else:
+    #         d.find_element(By.CLASS_NAME, 'css-1oqslv6').click()
+    #         time.sleep(0.5)
+    #         soup = BeautifulSoup(d.page_source, 'html.parser')
+    #         top_icon_div = soup.find('div', class_='css-3c0z1e')
+    #         top_icon_elm = top_icon_div.find('img', class_='css-onf91i')
+    #         icon_list.append(top_icon_elm['src'])
 
-    detail['icon_list'] = ' '.join(icon_list)
+    # detail['icon_list'] = ' '.join(icon_list)
 
     side_panel = soup.find('div', class_='css-rxcc9b')
     dl_elms = side_panel.find_all('dl', class_='css-1woihig')
