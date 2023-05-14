@@ -145,6 +145,6 @@ if __name__ == '__main__':
     for _ in range(args.iteration):
         tar_list = [l for l in product(occ_list, edu_backgound, prefs_list, age_list)]
         random.shuffle(tar_list)
-        for tall_range, edu_range, prefs_range, age in tar_list:
-            execute(d, age=age, prefs_range=prefs_range, tall_range=tall_range, edu_range=edu_range, last_login=args.last_login)
+        for occ_range, edu_range, prefs_range, age in tar_list:
+            execute(d, age=age, prefs_range=prefs_range, occ_range=occ_range, edu_range=edu_range, last_login=args.last_login)
 
