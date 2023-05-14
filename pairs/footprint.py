@@ -63,9 +63,9 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
     for occ in occ_list:
         try:
             d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
-            break
-        except:
-            print(occ)
+        except Exception as e:
+            print('occ:', occ)
+            print(e)
 
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
 
