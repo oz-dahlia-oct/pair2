@@ -62,7 +62,7 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
     d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(3) > .css-a3zx38 span").click()
     for occ in occ_list:
         d.execute_script('window.scrollBy(0, -4000);')
-        while True:
+        for _ in range(30):
             try:
                 d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
                 break
