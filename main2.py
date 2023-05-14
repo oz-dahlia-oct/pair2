@@ -43,6 +43,7 @@ def execute(
     prefs_range = [13],
     tall_range=[1, 999],
     edu_range=[1],
+    occ_range=[1]
 ):
     """
     last_login=1: オンライン
@@ -52,7 +53,7 @@ def execute(
 
     try:
         # 実行開始ア合図
-        logger.debug(f'年齢: {age}, 都道府県: {prefs_range}, 身長: {tall_range}, 最終ログイン: {last_login}, 学歴: {edu_range}')
+        logger.debug(f'年齢: {age}, 都道府県: {prefs_range}, 職業: {occ_range}, 最終ログイン: {last_login}, 学歴: {edu_range}')
         success, result, search_result, click_count = exe_pattern(
             d, age, prefs_range, last_login, tall_range, edu_background=edu_range, wait_time=2.0
         )
@@ -94,10 +95,10 @@ if __name__ == '__main__':
         print('tall_sep:', 0)
 
     if args.edu_sep == 0:
-        edu_backgound = [1]
+        edu_backgound = [[1]]
         print('edu_sep:', 0)
     elif args.edu_sep == 1:
-        edu_backgound = [2, 3, 4, 5, 6]
+        edu_backgound = [[2, 4, 5], [6], [3]]
         print('edu_sep:', 1)
 
 
@@ -126,6 +127,9 @@ if __name__ == '__main__':
     
     age_list = list(range(args.age_start, args.age_end))
 
+    other_occ = [i for i in range(1, 57) if i not in [1, 7, 27, 41, 23, 24, 46]]
+    occ_list = [[1], [7, 27], [41, 23, 24, 46], other_occ]
+
     print('\n\n\n')
 
     # 準備
@@ -139,7 +143,7 @@ if __name__ == '__main__':
     logger.debug(f'Last Login: {args.last_login}, Iteration: {args.iteration}, Age(start): {args.age_start}, Age(end): {args.age_end}')
     print('\n\n\n')
     for _ in range(args.iteration):
-        tar_list = [l for l in product(tall_list, edu_backgound, prefs_list, age_list)]
+        tar_list = [l for l in product(occ_list, edu_backgound, prefs_list, age_list)]
         random.shuffle(tar_list)
         for tall_range, edu_range, prefs_range, age in tar_list:
             execute(d, age=age, prefs_range=prefs_range, tall_range=tall_range, edu_range=edu_range, last_login=args.last_login)

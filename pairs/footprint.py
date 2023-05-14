@@ -25,7 +25,7 @@ import pandas as pd
 
 
 
-def search(d, age, prefs, login='1', tall=[1, 999], edu_background=1):
+def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list=[1]):
     
     # 検索条件全てリセット
     d.find_element(By.CLASS_NAME, 'css-5402qv').click()
@@ -51,10 +51,18 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=1):
     time.sleep(1)
     d.execute_script('window.scrollBy(0, -2000);')
     d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(4) > .css-a3zx38").click()
-    d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu_background}) .list-item-label__nmShn").click()
+    for edu in edu_background:
+        d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu}) .list-item-label__nmShn").click()
     time.sleep(1)
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
     time.sleep(1)
+
+    # 職種変更開始
+    d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(3) > .css-a3zx38 span").click()
+    for occ in occ_list:
+        d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
+    d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
+
 
     # 9 | select | css=li:nth-child(2) .css-dbt3au:nth-child(1) .css-1bq0nkw | label=29歳
     # 年齢開始選択
@@ -222,7 +230,7 @@ def check_user(d, user_id):
 
 
 
-def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait_time=1.7):
+def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, occ_list=[1], wait_time=1.7):
     d.get('https://pairs.lv/search')
     result = {'age': age, 'pref': prefs}
 
@@ -232,7 +240,7 @@ def exe_pattern(d, age, prefs, last_login, tall=[1, 999], edu_background=1, wait
     time.sleep(2)
 
     # 検索条件を設定して検索実行
-    search(d, age=age, prefs=prefs, login=f'{last_login}', tall=tall, edu_background=edu_background)
+    search(d, age=age, prefs=prefs, login=f'{last_login}', tall=tall, edu_background=edu_background, occ_list=occ_list)
     time.sleep(2)
     
     # 検索結果なしの場合をチェック
