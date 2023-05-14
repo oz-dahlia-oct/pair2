@@ -61,11 +61,16 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
     # 職種変更開始
     d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(3) > .css-a3zx38 span").click()
     for occ in occ_list:
-        try:
-            d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
-        except Exception as e:
-            print('occ:', occ)
-            print(e)
+        d.execute_script('window.scrollBy(0, -3000);')
+        for i in range(3):
+            try:
+                d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
+                break
+            except Exception as e:
+                d.execute_script('window.scrollBy(0, 1000);')
+                if i == 2:
+                    print('occ:', occ)
+                    print(e)
 
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
 
