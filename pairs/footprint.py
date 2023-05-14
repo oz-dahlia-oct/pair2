@@ -52,7 +52,8 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
     d.execute_script('window.scrollBy(0, -2000);')
     d.find_element(By.CSS_SELECTOR, "ul:nth-child(3) > li:nth-child(4) > .css-a3zx38").click()
     for edu in edu_background:
-        d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu}) .list-item-label__nmShn").click()
+        # d.find_element(By.CSS_SELECTOR, f".css-y1esha:nth-child({edu}) .list-item-label__nmShn").click()
+        d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{edu}"]').click()
     time.sleep(1)
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
     time.sleep(1)
