@@ -95,10 +95,10 @@ if __name__ == '__main__':
         print('tall_sep:', 0)
 
     if args.edu_sep == 0:
-        edu_backgound = [[1]]
+        edu_backgound = [[1, 2, 3, 4, 5]]
         print('edu_sep:', 0)
     elif args.edu_sep == 1:
-        edu_backgound = [[2, 4, 5], [6], [3]]
+        edu_backgound = [[2, 4, 5], [1], [3]]
         print('edu_sep:', 1)
 
 
