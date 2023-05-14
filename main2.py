@@ -55,7 +55,7 @@ def execute(
         # 実行開始ア合図
         logger.debug(f'年齢: {age}, 都道府県: {prefs_range}, 職業: {occ_range}, 最終ログイン: {last_login}, 学歴: {edu_range}')
         success, result, search_result, click_count = exe_pattern(
-            d, age, prefs_range, last_login, tall_range, edu_background=edu_range, wait_time=2.0
+            d, age, prefs_range, last_login, tall_range, edu_background=edu_range, occ_list=occ_range, wait_time=2.0
         )
         logger.debug(f'検索結果: {search_result}, 足跡付けた数: {click_count}')
         if success:
