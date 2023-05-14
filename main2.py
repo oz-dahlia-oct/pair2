@@ -127,7 +127,7 @@ if __name__ == '__main__':
     
     age_list = list(range(args.age_start, args.age_end))
 
-    other_occ = [i for i in range(1, 57) if i not in [1, 7, 27, 41, 23, 24, 46]]
+    other_occ = [i for i in range(1, 57) if i not in [1, 7, 27, 41, 23, 24, 46, 12]]
     occ_list = [[1], [7, 27], [41, 23, 24, 46], other_occ]
 
     print('\n\n\n')
