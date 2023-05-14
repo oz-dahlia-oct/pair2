@@ -67,7 +67,7 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
                 d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
                 break
             except:
-                d.execute_script('window.scrollBy(0, 500);')
+                d.execute_script('window.scrollBy(0, 200);')
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
 
     # 9 | select | css=li:nth-child(2) .css-dbt3au:nth-child(1) .css-1bq0nkw | label=29歳
