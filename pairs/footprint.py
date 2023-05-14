@@ -63,7 +63,6 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
         d.find_element(By.XPATH, f'//li[@data-test="list-item-value-{occ}"]').click()
     d.find_element(By.CSS_SELECTOR, "*[data-test=\"header-submit-button\"]").click()
 
-
     # 9 | select | css=li:nth-child(2) .css-dbt3au:nth-child(1) .css-1bq0nkw | label=29歳
     # 年齢開始選択
     dropdown = d.find_element(By.CSS_SELECTOR, "li:nth-child(2) .css-dbt3au:nth-child(1) .css-1bq0nkw")
@@ -79,14 +78,14 @@ def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list
     # dropdown.find_element(By.XPATH, "//option[. = '29歳']").click()
 
     # 身長始点
-    dropdown = d.find_element(By.CSS_SELECTOR, "li:nth-child(5) .css-dbt3au:nth-child(1) .css-1bq0nkw")
-    dropdown = Select(dropdown)
-    dropdown.select_by_value(f'{tall[0]}')
+    # dropdown = d.find_element(By.CSS_SELECTOR, "li:nth-child(5) .css-dbt3au:nth-child(1) .css-1bq0nkw")
+    # dropdown = Select(dropdown)
+    # dropdown.select_by_value(f'{tall[0]}')
     
     # 身長終点
-    dropdown = d.find_element(By.CSS_SELECTOR, "li:nth-child(5) .css-dbt3au:nth-child(3) .css-1bq0nkw")
-    dropdown = Select(dropdown)
-    dropdown.select_by_value(f'{tall[1]}')
+    # dropdown = d.find_element(By.CSS_SELECTOR, "li:nth-child(5) .css-dbt3au:nth-child(3) .css-1bq0nkw")
+    # dropdown = Select(dropdown)
+    # dropdown.select_by_value(f'{tall[1]}')
 
     # 11 | select | css=.css-whh5e5 > .css-dbt3au .css-1bq0nkw | label=24時間以内
     # 最終ログイン選択
