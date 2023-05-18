@@ -138,7 +138,7 @@ def click_users(d, wait_time=1.5, scroll_count=50):
         d.execute_script('window.scrollBy(0, 1000);')
         time.sleep(0.2)
 
-    first_user = d.find_element(By.CLASS_NAME, 'css-opde7s')
+    first_user = d.find_element(By.CLASS_NAME, 'css-m80f7u') # css-opde7s / css-m80f7u
     first_user.click()
     time.sleep(3) # 1人目だけ追加で待機
     
