@@ -27,8 +27,8 @@ import pandas as pd
 
 def search(d, age, prefs, login='1', tall=[1, 999], edu_background=[1], occ_list=[1]):
     
-    # 検索条件全てリセット
-    d.find_element(By.CLASS_NAME, 'css-5402qv').click()
+    # 検索条件全てリセット css-83urwp
+    d.find_element(By.CLASS_NAME, 'css-83urwp').click()
     time.sleep(0.1)
     
     # 居住地変更開始
@@ -174,7 +174,7 @@ def click_users(d, wait_time=1.5, scroll_count=50):
             # 矢印が表示されないので終了する（検索結果は一人）
             break
 
-    print(counter)
+    # print(counter)
     return counter
 
 
